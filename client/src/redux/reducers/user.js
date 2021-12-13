@@ -1,7 +1,9 @@
 const SET_USER = "SET_USER";
 const LOGOUT_USER = "LOGOUT_USER";
+const SET_VIDEOS = "SET_VIDEOS";
+
 const initialState = {
-    info: {}, isAuth: false
+    info: {}, isAuth: false, videos: []
 }
 
 export default function user(state = initialState, action) {
@@ -17,6 +19,11 @@ export default function user(state = initialState, action) {
                 ...state,
                 info: {},
                 isAuth: false
+            }
+        case SET_VIDEOS:
+            return {
+                ...state,
+                videos: [action.payload]
             }
         default:
             return state;

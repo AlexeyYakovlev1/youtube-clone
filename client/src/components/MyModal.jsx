@@ -11,7 +11,6 @@ const MyModal = ({children, open, setOpen}) => {
         transform: 'translate(-50%, -50%)',
         width: 960,
         bgcolor: '#282828',
-        p: 4,
         color: "#fff",
         borderRadius: 1
     };

@@ -1,8 +1,7 @@
 import React from "react";
-import {Box, List, Typography} from '@mui/material';
+import {Box, List} from '@mui/material';
 import VideoItem from "../components/VideoItem";
 import ImageStock from "../components/image.png";
-import MyModal from "../components/MyModal.jsx";
 
 const Home = () => {
 	const [videos, setVideos] = React.useState([{
@@ -28,25 +27,17 @@ const Home = () => {
 		watches: 213,
 		date: "13.12.2021"
 	}]);
-	const [open, setOpen] = React.useState(true); //DEBUG
 
 	return (
-		<>
-			<MyModal open={open} setOpen={setOpen}>
-				<Box>
-					
-				</Box>
-			</MyModal>
-			<Box>
-				<List sx={{display: "flex", flexWrap: "wrap", alignItems: "flex-start"}}>
-					{videos.map(video => {
-						return (
-							<VideoItem key={video._id} info={video} />
-						)
-					})}
-				</List>
-			</Box>
-		</>
+		<Box>
+			<List sx={{display: "flex", flexWrap: "wrap", alignItems: "flex-start"}}>
+				{videos.map(video => {
+					return (
+						<VideoItem key={video._id} info={video} />
+					)
+				})}
+			</List>
+		</Box>
 	)
 }
 
