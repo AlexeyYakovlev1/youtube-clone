@@ -1,0 +1,5 @@
+{
+	"mongoUrl": "mongodb+srv://alexey:SuEAv8h6sh0eKgQc@cluster0.3jlct.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+	"port": 5000,
+	"jwtKey": "youtube-clone-mern-stack"
+}
