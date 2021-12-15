@@ -1,9 +1,10 @@
 import propTypes from "prop-types";
 
-export const setUser = (user) => {
+export const setUser = (user, token) => {
     return {
         type: "SET_USER",
-        payload: user
+        payload: user,
+        token
     }
 }
 

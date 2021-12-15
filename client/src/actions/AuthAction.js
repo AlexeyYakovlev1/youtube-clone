@@ -51,7 +51,7 @@ export const login = (user, setMessage) => {
                         type: "error"
                     })
                 }
-                dispatch(setUser(data.infoUser));
+                dispatch(setUser(data.infoUser, data.token));
                 localStorage.setItem("token", data.token);
             })
         } catch(e) {
@@ -79,7 +79,7 @@ export const auth = () => {
                     return dispatch(logoutUser());
                 }
 
-                dispatch(setUser(data.infoUser));
+                dispatch(setUser(data.infoUser, data.token));
                 localStorage.setItem("token", data.token);
             })
         } catch(e) {

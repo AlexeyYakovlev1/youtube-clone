@@ -3,7 +3,8 @@ const LOGOUT_USER = "LOGOUT_USER";
 const SET_VIDEOS = "SET_VIDEOS";
 
 const initialState = {
-    info: {}, isAuth: false, videos: []
+    info: {}, isAuth: false, videos: [],
+    token: ""
 }
 
 export default function user(state = initialState, action) {
@@ -12,13 +13,15 @@ export default function user(state = initialState, action) {
             return {
                 ...state,
                 info: action.payload,
-                isAuth: true
+                isAuth: true,
+                token: action.token
             }
         case LOGOUT_USER:
             return {
                 ...state,
                 info: {},
-                isAuth: false
+                isAuth: false,
+                token: ""
             }
         case SET_VIDEOS:
             return {

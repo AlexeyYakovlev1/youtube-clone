@@ -1,14 +1,17 @@
 import React from "react";
 import {Alert, Avatar, Box, Button, Container, TextField, Typography} from '@mui/material';
 import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import MyModal from "../components/MyModal.jsx";
 import {Close, FileUpload, YouTube} from '@mui/icons-material';
-import {addVideo} from "../actions/VideosAction";
+import {getFile} from "../actions/VideosAction";
+import InfoVideo from "./InfoVideo.jsx";
 
 const Header = () => {
+	const [currentVideo, setCurrentVideo] = React.useState({
+		url: "", status: false
+	});
 	const [loading, setLoading] = React.useState(false);
-	const dispatch = useDispatch();
 	const user = useSelector(state => state.user.info);
 	const [open, setOpen] = React.useState(false);
 	const inputRef = React.useRef();
@@ -20,7 +23,7 @@ const Header = () => {
 		<>
 			{message.text && <Alert severity={message.type}>{message.text}</Alert>}
 			<MyModal open={open} setOpen={setOpen}>
-				<Box>
+				{!currentVideo.status ? <Box>
 					<Box sx={{
 						display: "flex", 
 						justifyContent: "space-between", 
@@ -36,10 +39,15 @@ const Header = () => {
 					<Box sx={{textAlign: "center", padding: 10}}>
 						<FileUpload sx={{color: "lightgrey", width: 136, height: 136, marginBottom: 5}} />
 						<Typography>Нажмите на кнопку ниже, чтобы выбрать файл на компьютере.</Typography>
-						<input type="file" ref={inputRef} onChange={(event) => dispatch(addVideo(event, setMessage, setLoading))} style={{display: "none"}} />
+						<input 
+							type="file" 
+							ref={inputRef} 
+							onChange={(event) => getFile(event, setMessage, setLoading, setCurrentVideo)} 
+							style={{display: "none"}} 
+						/>
 						<Button variant="contained" sx={{marginTop: 3}} onClick={() => inputRef.current.click()} disabled={loading}>Выбрать файлы</Button>
 					</Box>
-				</Box>
+				</Box> : <InfoVideo urlVideo={currentVideo.url} />}
 			</MyModal>
 			<Box sx={{
 				backgroundColor: "#202020", 
