@@ -1,18 +1,24 @@
 import React from 'react'
-import {Box, List, CircularProgress, Typography, Button} from "@mui/material";
+import {Box, List, CircularProgress, Typography, Button, Alert} from "@mui/material";
 import {useHistory, useParams} from "react-router-dom";
 import VideoItem from "../components/VideoItem";
 import ChannelItem from "../components/ChannelItem";
 import {useSelector} from "react-redux";
+import Comments from "../components/Comments";
 
 const Video = () => {
-    const currentUserId = useSelector(state => state.user.info._id);
+    const currentUser = useSelector(state => state.user.info);
+    const currentUserId = currentUser._id;
     const [loading, setLoading] = React.useState(false);
     const videoId = useParams().id;
     const [video, setVideo] = React.useState({});
     const [user, setUser] = React.useState({});
     const [allVideos, setAllVideos] = React.useState([]);
     const history = useHistory();
+    const [message, setMessage] = React.useState({
+        text: "", type: ""
+    })
+    const [comments, setComments] = React.useState([]);
 
     React.useEffect(() => {
         async function fetchUser() {
@@ -79,6 +85,25 @@ const Video = () => {
         // eslint-disable-next-line
     }, []);
 
+    React.useEffect(() => {
+        async function fetchComments() {
+            try {
+                const response = await fetch(`/api/comments/video/${videoId}`, {
+                    method: "GET"
+                })
+        
+                response.json().then(data => {
+                    setComments(data.findComments);
+                })
+            } catch(e) {
+                console.log(e);
+            }
+        }
+
+        fetchComments();
+        // eslint-disable-next-line
+    }, [videoId]);
+
     return (
         <Box sx={{display: "flex", alignItems: "flex-start"}}>
             {loading && <CircularProgress />}
@@ -103,7 +128,20 @@ const Video = () => {
                     </Box>
                 </Box>
 
-                <ChannelItem info={user} currentUserId={currentUserId} />
+                <Box sx={{paddingBottom: 2, borderBottom: "1px solid grey"}}>
+                    <ChannelItem info={user} currentUserId={currentUserId} />
+                    <Typography sx={{marginTop: 2, color: "#fff"}}>{video.description}</Typography>
+                </Box>
+
+                {message.text && <Alert severity={message.type}>{message.text}</Alert>}
+                <Comments 
+                    length={comments.length} 
+                    currentUser={currentUser}
+                    videoId={videoId} 
+                    setComments={setComments} 
+                    setMessage={setMessage}
+                    comments={comments || []}
+                />
             </Box>
 
             <Box>

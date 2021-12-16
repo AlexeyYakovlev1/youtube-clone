@@ -2,7 +2,8 @@ import React from 'react';
 import {Avatar, Box, Button, List, Typography, CircularProgress} from "@mui/material";
 import {useParams, useHistory} from "react-router-dom";
 import VideoItem from '../components/VideoItem';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import { logoutUser } from '../redux/actions';
 
 const User = () => {
     const [videos, setVideos] = React.useState([]);
@@ -11,6 +12,7 @@ const User = () => {
     const history = useHistory();
     const [loading, setLoading] = React.useState(false);
     const currentUserId = useSelector(state => state.user.info._id);
+    const dispatch = useDispatch();
 
     React.useEffect(() => {
         async function fetchUser() {
@@ -76,7 +78,11 @@ const User = () => {
                 </Box>
 
                 <Box>
-                    {currentUserId === userId ? <Button variant="contained">Настройки</Button> :
+                    {currentUserId === userId ? 
+                    <>
+                        <Button variant="contained" sx={{marginRight: 2}}>Настройки</Button>
+                        <Button variant="outlined" onClick={() => dispatch(logoutUser())}>Выйти</Button>
+                    </> :
                     <Button variant="contained">Подписаться</Button>}
                 </Box>
             </Box>

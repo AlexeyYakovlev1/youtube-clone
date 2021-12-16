@@ -30,7 +30,7 @@ const InfoVideo = ({urlVideo}) => {
                             style: {color: "#fff"}
                         }}
                         sx={{marginBottom: 2, width: "100%"}}
-                        variant="filled" 
+                        variant="outlined" 
                         label="Название видео"
                         value={info.name}
                         onChange={event => setInfo({...info, name: event.target.value})}
@@ -40,7 +40,7 @@ const InfoVideo = ({urlVideo}) => {
                             style: {color: "#fff"}
                         }}
                         sx={{marginBottom: 2, width: "100%"}}
-                        variant="filled" 
+                        variant="outlined" 
                         label="Описание видео"
                         value={info.description}
                         onChange={event => setInfo({...info, description: event.target.value})}
